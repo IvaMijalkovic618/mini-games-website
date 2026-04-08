@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+
+    #message {
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Enter Username</h2>
+
+<form id="form">
+  <input type="text" id="username" placeholder="Enter username">
+  <div id="message"></div>
+  <br>
+  <button type="submit" id="submitBtn" disabled>Enter</button>
+</form>
+
+<script>
+const usernameInput = document.getElementById("username");
+const message = document.getElementById("message");
+const button = document.getElementById("submitBtn");
+
+const blocked = ["john_doe", "mary.smith", "upfamnit-123"];
+const pattern = /^[A-Za-z0-9_.-]+$/;
+
+usernameInput.addEventListener("keyup", () => {
+  const value = usernameInput.value;
+
+  if (value === "") {
+    show("Username cannot be empty", "red");
+    button.disabled = true;
+    return;
+  }
+
+  if (!pattern.test(value)) {
+    show("Only letters, numbers, -, _, . allowed", "red");
+    button.disabled = true;
+    return;
+  }
+
+  if (blocked.includes(value)) {
+    show("Username already taken", "red");
+    button.disabled = true;
+    return;
+  }
+
+  show("Username is available!", "green");
+  button.disabled = false;
+});
+
+document.getElementById("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const username = usernameInput.value;
+
+  window.location.href = "website.html?user=" + username;
+});
+
+function show(text, color) {
+  message.textContent = text;
+  message.style.color = color;
+}
+</script>
+
+</body>
+</html>
