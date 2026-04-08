@@ -22,6 +22,3 @@ After successful username validation, users are redirected to a main menu where 
 2. Enter a valid username
 3. Access the game menu
 4. Choose a game and play
-
-## Live Demo
-https://ivamijalkovic618.github.io/mini-games-website/
