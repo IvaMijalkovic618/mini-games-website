@@ -24,3 +24,4 @@ After successful username validation, users are redirected to a main menu where 
 4. Choose a game and play
 
 ## Live Demo
+https://ivamijalkovic618.github.io/mini-games-website/
