@@ -6,6 +6,7 @@ After successful username validation, users are redirected to a main menu where 
 
 ## Live Demo
 https://ivamijalkovic618.github.io/mini-games-website/
+https://react-version-website.netlify.app/
 
 <p align="center">
 <img width="300" height="300" alt="Screenshot from 2026-04-09 22-54-35" src="https://github.com/user-attachments/assets/5786fe99-958d-446c-a51c-abf946885987" /> 
