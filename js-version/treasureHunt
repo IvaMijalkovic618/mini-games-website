@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Treasure Hunt</title>
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    td {
+      width: 40px;
+      height: 40px;
+      border: 1px solid black;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+    }
+
+    #message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Treasure Hunt</h2>
+
+  <label>Column (1-6): <input type="number" min="1" max="6"></label>
+  <label>Row (1-6): <input type="number" min="1" max="6"></label>
+  <button>Find Treasure</button>
+
+  <div id="message"></div>
+  <table></table>
+
+  <script>
+    const table = document.querySelector("table");
+    const button = document.querySelector("button");
+    const messageBox = document.getElementById("message");
+    const colInput = document.querySelectorAll("input")[0];
+    const rowInput = document.querySelectorAll("input")[1];
+
+    const cells = [];
+
+    // create 6x6 table
+    for (let row = 0; row < 6; row++) {
+      const tr = document.createElement("tr");
+
+      for (let col = 0; col < 6; col++) {
+        const td = document.createElement("td");
+        tr.appendChild(td);
+        cells.push(td);
+      }
+
+      table.appendChild(tr);
+    }
+
+    button.addEventListener("click", function () {
+      if (button.textContent === "Restart") {
+        location.reload();
+        return;
+      }
+
+      messageBox.textContent = "";
+      messageBox.style.color = "";
+
+      const col = parseInt(colInput.value);
+      const row = parseInt(rowInput.value);
+
+      // validation
+      if (colInput.value === "" && rowInput.value === "") {
+        messageBox.textContent = "Both inputs are empty.";
+        messageBox.style.color = "red";
+        return;
+      }
+
+      if (colInput.value === "") {
+        messageBox.textContent = "Column input is empty.";
+        messageBox.style.color = "red";
+        return;
+      }
+
+      if (rowInput.value === "") {
+        messageBox.textContent = "Row input is empty.";
+        messageBox.style.color = "red";
+        return;
+      }
+
+      if (col < 1 || col > 6) {
+        messageBox.textContent = "Column must be between 1 and 6.";
+        messageBox.style.color = "red";
+        return;
+      }
+
+      if (row < 1 || row > 6) {
+        messageBox.textContent = "Row must be between 1 and 6.";
+        messageBox.style.color = "red";
+        return;
+      }
+
+      // clear old colors and symbols
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].style.backgroundColor = "";
+        cells[i].textContent = "";
+      }
+
+      let delay = 0;
+
+      // move down in first column
+      for (let r = 1; r <= row; r++) {
+        setTimeout(function () {
+          let index = (r - 1) * 6;
+          cells[index].style.backgroundColor = "lightblue";
+        }, delay);
+
+        delay += 300;
+      }
+
+      // move right in selected row
+      for (let c = 2; c <= col; c++) {
+        setTimeout(function () {
+          let index = (row - 1) * 6 + (c - 1);
+          cells[index].style.backgroundColor = "lightblue";
+        }, delay);
+
+        delay += 300;
+      }
+
+      // final result
+      setTimeout(function () {
+        let finalIndex = (row - 1) * 6 + (col - 1);
+
+        if (col === 2 && row === 4) {
+          cells[finalIndex].style.backgroundColor = "lightgreen";
+          cells[finalIndex].textContent = "💰";
+          messageBox.textContent = "Congratulations! You found the treasure!";
+          messageBox.style.color = "green";
+        } else {
+          cells[finalIndex].style.backgroundColor = "pink";
+          cells[finalIndex].textContent = "❌";
+          messageBox.textContent = "No treasure at that location.";
+          messageBox.style.color = "red";
+        }
+
+        button.textContent = "Restart";
+      }, delay);
+    });
+  </script>
+</body>
+</html>
